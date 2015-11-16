@@ -1,13 +1,14 @@
 'use strict';
 
 import React, { Component } from 'react';
+import TagsList from './tags-list';
 
 export default class Quote extends Component {
     render() {
       const tags = this.props.tags;
       return(
         <div className='well well-lg'>
-            <a href='#'>{this.props.qdbid}</a>
+            <a href='#'>{this.props.id}</a>
             <blockquote className='qdb-quote-text'>
                 {this.props.quoteText}
             </blockquote>
@@ -15,9 +16,7 @@ export default class Quote extends Component {
                 {this.props.smallText}
             </small>
             <hr />
-            {tags.map(function renderButtons(tag) {
-              return <button type='button' className='qdb-tag-button btn btn-primary btn-sm' id='{tag}'>{tag}</button>;
-            } )}
+            <TagsList tags={tags} />
         </div>
         );
     }

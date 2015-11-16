@@ -9,8 +9,21 @@
 import React from 'react';
 
 import TagsList from './tags-list';
+import { connect } from 'react-redux';
+import { getTags } from '../actions/tags';
 
-export default class TagsPage extends React.Component {
+function mapStateToProps(state) {
+  return {
+    tags: state.tags,
+  };
+}
+
+class TagsPage extends React.Component {
+ 
+  componentDidMount(){
+    this.props.dispatch(getTags());
+  }
+
   render() {
     return(
       <div>
@@ -23,3 +36,5 @@ export default class TagsPage extends React.Component {
       </div>);
   }
 }
+
+export default connect(mapStateToProps)(TagsPage);

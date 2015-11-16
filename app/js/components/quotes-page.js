@@ -7,22 +7,34 @@
 'use strict';
 
 import React from 'react';
+import { connect } from 'react-redux';
 
 import TagsList from './tags-list';
 import Quote from './quote';
+import { getQuotes } from '../actions/quotes';
 
-export default class QuotesPage extends React.Component {
+function mapStateToProps(state){
+  return { quotes : state.quotes, };
+}
+
+class QuotesPage extends React.Component {
+
+  componentDidMount(){
+    this.props.dispatch(getQuotes());
+  }
+
   render() {
-    const quotesList = this.props.quotes || [];
+    const quotesList = this.props.quotes;
     return(
       <div>
         <div className='container' id='qdb-content'>
           <div className='page-header'>
             <h1>Quotes</h1>
           </div>
-          {quotesList.map(thisQuote => <Quote quoteText={thisQuote.quoteText} smallText={thisQuote.smallText} tags={thisQuote.tags}  /> )}
+          {quotesList.map(thisQuote => <Quote quoteText={thisQuote.body} smallText={thisQuote.description} tags={thisQuote.tags}  key={thisQuote.id} id={thisQuote.id}/> )}
         </div>
-        <TagsList tags={this.props.tags} />
       </div>);
   }
 }
+
+export default connect(mapStateToProps)(QuotesPage);
